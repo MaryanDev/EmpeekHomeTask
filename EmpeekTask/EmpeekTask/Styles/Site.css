@@ -1,2 +1,26 @@
 ﻿body {
 }
+.container{
+    width: 600px;
+    margin-top:5%;
+}
+a{
+    font-size:12pt;
+    text-decoration: underline;
+    font-weight:bold;
+}
+table, td, th{
+    border: 2px solid darkgray;
+    font-size:12pt;
+    text-align:center;
+}
+table thead{
+    background-color:  darkgray;
+    color:white;
+}
+b{
+    font-size: 12pt;
+}
+ul, label{
+    margin-top:5%;
+}

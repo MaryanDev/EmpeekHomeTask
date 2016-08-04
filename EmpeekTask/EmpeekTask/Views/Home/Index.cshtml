@@ -4,8 +4,8 @@
     Layout = "~/Views/_Layout.cshtml";
 }
 
-<div ng-controller="browserController">
-    <table>
+<div ng-controller="browserController" class="container">
+    <table class="table">
         <thead>
             <tr>
                 <th>Less 10Mb</th>
@@ -21,9 +21,12 @@
             </tr>
         </tbody>
     </table>
-    <b>Current Path: </b>{{currentPath}}
-    <ul>
-        <li ng-repeat="item in browserItems"><a href="#">{{item}}</a></li>
+    <label>
+        <b>Current Path: </b>{{currentPath}}
+    </label>
+    <ul class="list-unstyled">
+        <li><a href="#" class="text-info text-capitalize">..</a></li>
+        <li ng-repeat="item in browserItems"><a href="#" class="text-info text-capitalize">{{item}}</a></li>
     </ul>
 </div>
 
