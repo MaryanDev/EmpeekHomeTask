@@ -8,9 +8,18 @@
     function browserService($http) {
 
         var service = {
-
+            getDrives: getDrivesAjax
         };
 
         return service;
+
+        function getDrivesAjax() {
+            var promise = $http({
+                method: "GET",
+                url: "/api/browser"
+            });
+
+            return promise;
+        };
     }
 })(angular);

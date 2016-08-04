@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.IO;
-using System.Web.Mvc;
+using EmpeekTask.Models;
 
 namespace EmpeekTask.Controllers
 {
@@ -22,7 +22,15 @@ namespace EmpeekTask.Controllers
                     logicalDrivesNames.Add(drive.Name);
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK, logicalDrivesNames);
+            PageInfo pageInfo = new PageInfo
+            {
+                CurrentPath = "",
+                SmallObjects = 0,
+                MediumObjects = 0,
+                LargeObjects = 0,
+                BrowserItems = logicalDrivesNames
+            };
+            return Request.CreateResponse(HttpStatusCode.OK, pageInfo);
         }
                 
     }

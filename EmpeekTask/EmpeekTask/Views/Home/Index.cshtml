@@ -6,10 +6,24 @@
 
 <div ng-controller="browserController">
     <table>
-
+        <thead>
+            <tr>
+                <th>Less 10Mb</th>
+                <th>10Mb - 50Mb</th>
+                <th>More 100Mb</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{smallObjects}}</td>
+                <td>{{mediumObjects}}</td>
+                <td>{{largeObjects}}</td>
+            </tr>
+        </tbody>
     </table>
+    <b>Current Path: </b>{{currentPath}}
     <ul>
-
+        <li ng-repeat="item in browserItems"><a href="#">{{item}}</a></li>
     </ul>
 </div>
 
