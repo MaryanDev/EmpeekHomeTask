@@ -21,10 +21,25 @@
                     console.log(response);
 
                     $scope.browserItems = response.data.BrowserItems;
-                    $scope.smallObjects = response.data.SmallObjects;
-                    $scope.mediumObjects = response.data.MediumObjects;
-                    $scope.largeObjects = response.data.LargeObjects;
+                    $scope.smallObjects = 0;
+                    $scope.mediumObjects = 0;
+                    $scope.largeObjects = 0;
                     $scope.currentPath = response.data.CurrentPath;
+                });
+        };
+
+        $scope.getObjects = function (basePath, selectedItem) {
+            browserService.getObjects(basePath, selectedItem)
+                .then(function (response) {
+                    console.log(response.data);
+
+                    $scope.browserItems = response.data.BrowserItems;
+                    $scope.smallObjects = 0;
+                    $scope.mediumObjects = 0;
+                    $scope.largeObjects = 0;
+                    $scope.currentPath = response.data.CurrentPath;
+                }, function errorCallback(response) {
+                    alert(response.data);
                 });
         };
     };

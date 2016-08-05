@@ -25,8 +25,8 @@
         <b>Current Path: </b>{{currentPath}}
     </label>
     <ul class="list-unstyled">
-        <li><a href="#" class="text-info text-capitalize">..</a></li>
-        <li ng-repeat="item in browserItems"><a href="#" class="text-info text-capitalize">{{item}}</a></li>
+        <li ng-hide="currentPath === ''"><a href="#" class="text-info text-capitalize" ng-click="getObjects(currentPath, '..')">..</a></li>
+        <li ng-repeat="item in browserItems"><a href="#" class="text-info text-capitalize" ng-click="getObjects(currentPath, item)">{{item}}</a></li>
     </ul>
 </div>
 

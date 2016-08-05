@@ -8,7 +8,8 @@
     function browserService($http) {
 
         var service = {
-            getDrives: getDrivesAjax
+            getDrives: getDrivesAjax,
+            getObjects: getObjectsAjax
         };
 
         return service;
@@ -20,6 +21,19 @@
             });
 
             return promise;
+        };
+
+        function getObjectsAjax(basePath, selectedItem) {
+            var promise = $http({
+                method: "GET",
+                url: "/api/browser",
+                params: {
+                    basePath: basePath,
+                    selectedItem: selectedItem
+                }
+            });
+
+           return promise; 
         };
     }
 })(angular);

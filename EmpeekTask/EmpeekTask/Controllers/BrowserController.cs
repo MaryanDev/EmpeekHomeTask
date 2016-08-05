@@ -13,25 +13,58 @@ namespace EmpeekTask.Controllers
     {
         public HttpResponseMessage GetDrives()
         {
-            DriveInfo[] logicaDrives = DriveInfo.GetDrives();
-            List<string> logicalDrivesNames = new List<string>();
-
-            foreach (var drive in logicaDrives)
-            {
-                if (drive.DriveType.ToString() == "Fixed")
-                    logicalDrivesNames.Add(drive.Name);
-            }
+            List<string> logicalDrives = BrowserHelper.GetLogicalDrives();
 
             PageInfo pageInfo = new PageInfo
             {
                 CurrentPath = "",
-                SmallObjects = 0,
-                MediumObjects = 0,
-                LargeObjects = 0,
-                BrowserItems = logicalDrivesNames
+                BrowserItems = logicalDrives
             };
             return Request.CreateResponse(HttpStatusCode.OK, pageInfo);
         }
-                
+
+        public HttpResponseMessage GetObjects(string basePath, string selectedItem)
+        {
+            PageInfo pageInfo;
+            try
+            {
+                if (basePath != null)
+                    //Checking for return logical drives instead some folders. If basePath is something like C:\ or D:\ and we want to go back then we need to return list of logical drives
+                    if (basePath.EndsWith(@":\") && basePath.Length == 3 && selectedItem == "..")
+                    {
+                        List<string> logicalDrives = BrowserHelper.GetLogicalDrives();
+                        pageInfo = new PageInfo
+                        {
+                            CurrentPath = "",
+                            BrowserItems = logicalDrives
+                        };
+
+                        return Request.CreateResponse(HttpStatusCode.OK, pageInfo);
+                    }
+                string path = basePath == null ? selectedItem : Path.Combine(basePath, selectedItem);
+
+                List<string> itemsList = BrowserHelper.GetItemsForSelectedPath(path);
+                pageInfo = new PageInfo
+                {
+                    CurrentPath = new DirectoryInfo(path).FullName,
+                    BrowserItems = itemsList
+                };
+
+                return Request.CreateResponse(HttpStatusCode.OK, pageInfo);
+            }
+            catch (IOException ioEx)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ioEx.Message);
+            }
+            catch (UnauthorizedAccessException unaEx)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, unaEx.Message);
+            }
+            catch (NullReferenceException)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Invalid Path");
+            }
+        }
+
     }
 }
