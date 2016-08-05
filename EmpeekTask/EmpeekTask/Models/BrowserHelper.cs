@@ -35,5 +35,22 @@ namespace EmpeekTask.Models
 
             return itemsList;
         }
+
+        public static int GetCountOfFiles(string path, Func<long, bool> criteria)
+        {
+            string[] fileNames = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories);
+            int count = 0;
+
+            foreach(var fileName in fileNames)
+            {
+                FileInfo fileInfo = new FileInfo(fileName);
+                if(criteria(fileInfo.Length / 1024 / 1024))
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
     }
 }

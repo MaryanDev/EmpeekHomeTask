@@ -9,7 +9,8 @@
 
         var service = {
             getDrives: getDrivesAjax,
-            getObjects: getObjectsAjax
+            getObjects: getObjectsAjax,
+            sortFilesBySize: sortFilesBySizeAjax
         };
 
         return service;
@@ -34,6 +35,19 @@
             });
 
            return promise; 
+        };
+
+        function sortFilesBySizeAjax(basePath, selectedItem) {
+            var promise = $http({
+                method: "GET",
+                url: "api/filesize",
+                params: {
+                    basePath: basePath,
+                    selectedItem: selectedItem
+                }
+            });
+
+            return promise;
         };
     }
 })(angular);

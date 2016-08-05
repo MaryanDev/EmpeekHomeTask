@@ -52,17 +52,17 @@ namespace EmpeekTask.Controllers
 
                 return Request.CreateResponse(HttpStatusCode.OK, pageInfo);
             }
-            catch (IOException ioEx)
+            catch (IOException)
             {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ioEx.Message);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Wrong directory name, or you try to access some file. ");
             }
-            catch (UnauthorizedAccessException unaEx)
+            catch (UnauthorizedAccessException)
             {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, unaEx.Message);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Error! Probably you haw no access to some directories or files. ");
             }
             catch (NullReferenceException)
             {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Invalid Path");
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Invalid Path. ");
             }
         }
 

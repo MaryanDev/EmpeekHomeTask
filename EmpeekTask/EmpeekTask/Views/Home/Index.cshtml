@@ -15,18 +15,19 @@
         </thead>
         <tbody>
             <tr>
-                <td>{{smallObjects}}</td>
-                <td>{{mediumObjects}}</td>
-                <td>{{largeObjects}}</td>
+                <td>{{smallFiles}}</td>
+                <td>{{mediumFiles}}</td>
+                <td>{{largeFiles}}</td>
             </tr>
         </tbody>
     </table>
+    <label id="error" ng-hide="errorMessage === ''">{{errorMessage}}</label>
     <label>
         <b>Current Path: </b>{{currentPath}}
     </label>
     <ul class="list-unstyled">
-        <li ng-hide="currentPath === ''"><a href="#" class="text-info text-capitalize" ng-click="getObjects(currentPath, '..')">..</a></li>
-        <li ng-repeat="item in browserItems"><a href="#" class="text-info text-capitalize" ng-click="getObjects(currentPath, item)">{{item}}</a></li>
+        <li ng-hide="currentPath === ''"><a href="#" class="text-info text-capitalize" ng-click="getData(currentPath, '..')">..</a></li>
+        <li ng-repeat="item in browserItems"><a href="#" class="text-info text-capitalize" ng-click="getData(currentPath, item)">{{item}}</a></li>
     </ul>
 </div>
 

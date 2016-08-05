@@ -7,9 +7,9 @@ namespace EmpeekTask.Models
 {
     public class FileSizeInfo
     {
-        public int SmallObjects { get; set; }
-        public int MediumObjects { get; set; }
-        public int LargeObjects { get; set; }
+        public int SmallFiles { get; set; }
+        public int MediumFiles { get; set; }
+        public int LargeFiles { get; set; }
 
     }
 }

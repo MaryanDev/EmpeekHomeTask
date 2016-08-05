@@ -24,3 +24,7 @@ b{
 ul, label{
     margin-top:5%;
 }
+#error{
+    color: red;
+    font-size:12pt;
+}

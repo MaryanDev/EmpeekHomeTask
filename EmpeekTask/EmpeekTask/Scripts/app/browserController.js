@@ -8,39 +8,56 @@
     function browserController($scope, browserService) {
 
         $scope.browserItems = null;
-        $scope.smallObjects = 0;
-        $scope.mediumObjects = 0;
-        $scope.largeObjects = 0;
+        $scope.smallFiles = 0;
+        $scope.mediumFiles = 0;
+        $scope.largeFiles = 0;
         $scope.currentPath = "";
+        $scope.errorMessage = "";
 
         activate();
 
         function activate() {
             browserService.getDrives()
                 .then(function (response) {
-                    console.log(response);
-
                     $scope.browserItems = response.data.BrowserItems;
-                    $scope.smallObjects = 0;
-                    $scope.mediumObjects = 0;
-                    $scope.largeObjects = 0;
                     $scope.currentPath = response.data.CurrentPath;
                 });
         };
 
-        $scope.getObjects = function (basePath, selectedItem) {
+        $scope.getData = function(basePath, selectedItem){
+            getObjects(basePath, selectedItem);
+            sortFilesBySize(basePath, selectedItem);
+        };
+
+        function getObjects(basePath, selectedItem) {
             browserService.getObjects(basePath, selectedItem)
                 .then(function (response) {
-                    console.log(response.data);
-
                     $scope.browserItems = response.data.BrowserItems;
-                    $scope.smallObjects = 0;
-                    $scope.mediumObjects = 0;
-                    $scope.largeObjects = 0;
                     $scope.currentPath = response.data.CurrentPath;
+                    $scope.errorMessage = "";
                 }, function errorCallback(response) {
-                    alert(response.data);
+                    $scope.errorMessage += response.data;
+                    resetSizeFiles();
                 });
+        };
+
+        function sortFilesBySize(basePath, selectedItem) {
+            browserService.sortFilesBySize(basePath, selectedItem)
+                .then(function (response) {
+                    $scope.smallFiles = response.data.SmallFiles;
+                    $scope.mediumFiles = response.data.MediumFiles;
+                    $scope.largeFiles = response.data.LargeFiles;
+                    $scope.errorMessage = "";
+                }, function errorCallback(response) {
+                    $scope.errorMessage += response.data;
+                    resetSizeFiles();
+                });
+        }
+
+        function resetSizeFiles() {
+            $scope.smallFiles = 0;
+            $scope.mediumFiles = 0;
+            $scope.largeFiles = 0;
         };
     };
 })(angular);
