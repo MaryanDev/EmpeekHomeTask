@@ -5,7 +5,9 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.IO;
-using EmpeekTask.Models;
+using EmpeekTask.Helpers.Abstract;
+using EmpeekTask.Helpers.Concrete;
+using EmpeekTask.Helpers.Entities;
 
 namespace EmpeekTask.Controllers
 {
@@ -13,7 +15,8 @@ namespace EmpeekTask.Controllers
     {
         public HttpResponseMessage GetDrives()
         {
-            List<string> logicalDrives = BrowserHelper.GetLogicalDrives();
+            BrowserHelper helper = new BrowserHelper();
+            List<string> logicalDrives = helper.GetLogicalDrives();
 
             PageInfo pageInfo = new PageInfo
             {
@@ -25,6 +28,7 @@ namespace EmpeekTask.Controllers
 
         public HttpResponseMessage GetObjects(string basePath, string selectedItem)
         {
+            BrowserHelper helper = new BrowserHelper();
             PageInfo pageInfo;
             try
             {
@@ -32,7 +36,7 @@ namespace EmpeekTask.Controllers
                     //Checking for return logical drives instead some folders. If basePath is something like C:\ or D:\ and we want to go back then we need to return list of logical drives
                     if (basePath.EndsWith(@":\") && basePath.Length == 3 && selectedItem == "..")
                     {
-                        List<string> logicalDrives = BrowserHelper.GetLogicalDrives();
+                        List<string> logicalDrives = helper.GetLogicalDrives();
                         pageInfo = new PageInfo
                         {
                             CurrentPath = "",
@@ -43,7 +47,7 @@ namespace EmpeekTask.Controllers
                     }
                 string path = basePath == null ? selectedItem : Path.Combine(basePath, selectedItem);
 
-                List<string> itemsList = BrowserHelper.GetItemsForSelectedPath(path);
+                List<string> itemsList = helper.GetItemsForSelectedPath(path);
                 pageInfo = new PageInfo
                 {
                     CurrentPath = new DirectoryInfo(path).FullName,

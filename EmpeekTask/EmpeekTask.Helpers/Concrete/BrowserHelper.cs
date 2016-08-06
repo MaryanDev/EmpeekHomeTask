@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
+using EmpeekTask.Helpers.Abstract;
 using System.IO;
 
-namespace EmpeekTask.Models
+namespace EmpeekTask.Helpers.Concrete
 {
-    public static class BrowserHelper
+    public class BrowserHelper : IBrowserHelper
     {
-        public static List<string> GetLogicalDrives()
+        public List<string> GetLogicalDrives()
         {
             DriveInfo[] logicaDrives = DriveInfo.GetDrives();
             List<string> logicalDrivesNames = new List<string>();
@@ -22,7 +24,7 @@ namespace EmpeekTask.Models
             return logicalDrivesNames;
         }
 
-        public static List<string> GetItemsForSelectedPath(string path)
+        public List<string> GetItemsForSelectedPath(string path)
         {
             DirectoryInfo dInfo = new DirectoryInfo(path);
             List<string> itemsList = new List<string>();
@@ -36,15 +38,15 @@ namespace EmpeekTask.Models
             return itemsList;
         }
 
-        public static int GetCountOfFiles(string path, Func<long, bool> criteria)
+        public int GetCountOfFiles(string path, Func<long, bool> criteria)
         {
             string[] fileNames = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories);
             int count = 0;
 
-            foreach(var fileName in fileNames)
+            foreach (var fileName in fileNames)
             {
                 FileInfo fileInfo = new FileInfo(fileName);
-                if(criteria(fileInfo.Length / 1024 / 1024))
+                if (criteria(fileInfo.Length / 1024 / 1024))
                 {
                     count++;
                 }
