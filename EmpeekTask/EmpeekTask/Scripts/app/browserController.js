@@ -14,6 +14,7 @@
         $scope.currentPath = "";
         $scope.itemsErrorMessage = "";
         $scope.fileSizeErrorMessage = "";
+        $scope.isLoading = false;
 
         activate();
 
@@ -43,15 +44,18 @@
         };
 
         function sortFilesBySize(basePath, selectedItem) {
+            $scope.isLoading = true;
             browserService.sortFilesBySize(basePath, selectedItem)
                 .then(function (response) {
                     $scope.smallFiles = response.data.SmallFiles;
                     $scope.mediumFiles = response.data.MediumFiles;
                     $scope.largeFiles = response.data.LargeFiles;
                     $scope.fileSizeErrorMessage = "";
+                    $scope.isLoading = false;
                 }, function errorCallback(response) {
                     $scope.fileSizeErrorMessage = response.data;
                     resetSizeFiles();
+                    $scope.isLoading = false;
                 });
         }
 

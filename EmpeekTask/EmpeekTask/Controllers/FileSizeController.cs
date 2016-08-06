@@ -33,7 +33,7 @@ namespace EmpeekTask.Controllers
             }
             catch(UnauthorizedAccessException)
             {
-                return Request.CreateResponse(HttpStatusCode.Unauthorized, "Can't calculate size of some files, probably you have no access to some directories or files. ");
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Can't calculate size of some files, probably you have no access to some directories or files. ");
             }
             catch(IOException)
             {
