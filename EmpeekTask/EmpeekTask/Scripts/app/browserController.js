@@ -12,7 +12,8 @@
         $scope.mediumFiles = 0;
         $scope.largeFiles = 0;
         $scope.currentPath = "";
-        $scope.errorMessage = "";
+        $scope.itemsErrorMessage = "";
+        $scope.fileSizeErrorMessage = "";
 
         activate();
 
@@ -34,9 +35,9 @@
                 .then(function (response) {
                     $scope.browserItems = response.data.BrowserItems;
                     $scope.currentPath = response.data.CurrentPath;
-                    $scope.errorMessage = "";
+                    $scope.itemsErrorMessage = "";
                 }, function errorCallback(response) {
-                    $scope.errorMessage += response.data;
+                    $scope.itemsErrorMessage = response.data;
                     resetSizeFiles();
                 });
         };
@@ -47,9 +48,9 @@
                     $scope.smallFiles = response.data.SmallFiles;
                     $scope.mediumFiles = response.data.MediumFiles;
                     $scope.largeFiles = response.data.LargeFiles;
-                    $scope.errorMessage = "";
+                    $scope.fileSizeErrorMessage = "";
                 }, function errorCallback(response) {
-                    $scope.errorMessage += response.data;
+                    $scope.fileSizeErrorMessage = response.data;
                     resetSizeFiles();
                 });
         }

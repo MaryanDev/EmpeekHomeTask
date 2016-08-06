@@ -58,7 +58,7 @@ namespace EmpeekTask.Controllers
             }
             catch (UnauthorizedAccessException)
             {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Error! Probably you haw no access to some directories or files. ");
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Error! Probably you have no access to some directories or files. ");
             }
             catch (NullReferenceException)
             {
