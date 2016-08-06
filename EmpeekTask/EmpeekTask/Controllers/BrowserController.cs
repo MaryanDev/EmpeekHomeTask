@@ -13,9 +13,14 @@ namespace EmpeekTask.Controllers
 {
     public class BrowserController : ApiController
     {
+        private IBrowserHelper helper;
+
+        public BrowserController(IBrowserHelper helperParam)
+        {
+            helper = helperParam;
+        }
         public HttpResponseMessage GetDrives()
         {
-            BrowserHelper helper = new BrowserHelper();
             List<string> logicalDrives = helper.GetLogicalDrives();
 
             PageInfo pageInfo = new PageInfo
@@ -27,8 +32,7 @@ namespace EmpeekTask.Controllers
         }
 
         public HttpResponseMessage GetObjects(string basePath, string selectedItem)
-        {
-            BrowserHelper helper = new BrowserHelper();
+        {     
             PageInfo pageInfo;
             try
             {

@@ -14,10 +14,14 @@ namespace EmpeekTask.Controllers
 {
     public class FileSizeController : ApiController
     {
+        private IBrowserHelper helper;
+        public FileSizeController(IBrowserHelper helperParam)
+        {
+            helper = helperParam;
+        }
         [HttpGet]
         public HttpResponseMessage SortFiles(string basePath, string selectedItem)
         {
-            BrowserHelper helper = new BrowserHelper();
             try
             {
                 string path = basePath == null ? selectedItem : Path.Combine(basePath, selectedItem);
