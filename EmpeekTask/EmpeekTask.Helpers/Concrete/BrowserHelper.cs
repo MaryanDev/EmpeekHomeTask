@@ -4,14 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EmpeekTask.Helpers.Abstract;
+using EmpeekTask.Helpers.Entities;
 using System.IO;
 
 namespace EmpeekTask.Helpers.Concrete
 {
     public class BrowserHelper : IBrowserHelper
     {
-        public List<string> GetLogicalDrives()
+        public PageInfo GetLogicalDrives()
         {
+            PageInfo result;
             DriveInfo[] logicaDrives = DriveInfo.GetDrives();
             List<string> logicalDrivesNames = new List<string>();
 
@@ -20,12 +22,18 @@ namespace EmpeekTask.Helpers.Concrete
                 if (drive.DriveType.ToString() == "Fixed")
                     logicalDrivesNames.Add(drive.Name);
             }
+            result = new PageInfo
+            {
+                CurrentPath = String.Empty,
+                BrowserItems = logicalDrivesNames
+            };
 
-            return logicalDrivesNames;
+            return result;
         }
 
-        public List<string> GetItemsForSelectedPath(string path)
+        public PageInfo GetItemsForSelectedPath(string path)
         {
+            PageInfo result;
             DirectoryInfo dInfo = new DirectoryInfo(path);
             List<string> itemsList = new List<string>();
             var objInfo = dInfo.GetFileSystemInfos();
@@ -35,7 +43,13 @@ namespace EmpeekTask.Helpers.Concrete
                 itemsList.Add(item.Name);
             }
 
-            return itemsList;
+            result = new PageInfo
+            {
+                CurrentPath = new DirectoryInfo(path).FullName,
+                BrowserItems = itemsList
+            };
+
+            return result;
         }
 
         public int GetCountOfFiles(string path, Func<long, bool> criteria)

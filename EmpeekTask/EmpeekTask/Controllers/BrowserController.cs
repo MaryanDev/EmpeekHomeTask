@@ -21,13 +21,7 @@ namespace EmpeekTask.Controllers
         }
         public HttpResponseMessage GetDrives()
         {
-            List<string> logicalDrives = helper.GetLogicalDrives();
-
-            PageInfo pageInfo = new PageInfo
-            {
-                CurrentPath = "",
-                BrowserItems = logicalDrives
-            };
+            PageInfo pageInfo = helper.GetLogicalDrives();
             return Request.CreateResponse(HttpStatusCode.OK, pageInfo);
         }
 
@@ -40,23 +34,13 @@ namespace EmpeekTask.Controllers
                     //Checking for return logical drives instead some folders. If basePath is something like C:\ or D:\ and we want to go back then we need to return list of logical drives
                     if (basePath.EndsWith(@":\") && basePath.Length == 3 && selectedItem == "..")
                     {
-                        List<string> logicalDrives = helper.GetLogicalDrives();
-                        pageInfo = new PageInfo
-                        {
-                            CurrentPath = "",
-                            BrowserItems = logicalDrives
-                        };
+                        pageInfo = helper.GetLogicalDrives();
 
                         return Request.CreateResponse(HttpStatusCode.OK, pageInfo);
                     }
                 string path = basePath == null ? selectedItem : Path.Combine(basePath, selectedItem);
 
-                List<string> itemsList = helper.GetItemsForSelectedPath(path);
-                pageInfo = new PageInfo
-                {
-                    CurrentPath = new DirectoryInfo(path).FullName,
-                    BrowserItems = itemsList
-                };
+                pageInfo = helper.GetItemsForSelectedPath(path);
 
                 return Request.CreateResponse(HttpStatusCode.OK, pageInfo);
             }
