@@ -45,6 +45,8 @@
 
         function sortFilesBySize(basePath, selectedItem) {
             $scope.isLoading = true;
+            $scope.fileSizeErrorMessage = "";
+            $scope.itemsErrorMessage = "";
             browserService.sortFilesBySize(basePath, selectedItem)
                 .then(function (response) {
                     $scope.smallFiles = response.data.SmallFiles;

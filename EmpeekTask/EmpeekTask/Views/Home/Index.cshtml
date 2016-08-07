@@ -41,8 +41,8 @@
         <b>Current Path: </b>{{currentPath}}
     </label>
     <ul class="list-unstyled" ng-cloak>
-        <li ng-hide="currentPath === ''"><a href="#" class="text-info text-capitalize" ng-click="getData(currentPath, '..')">..</a></li>
-        <li ng-repeat="item in browserItems"><a href="#" class="text-info text-capitalize" ng-click="getData(currentPath, item)">{{item}}</a></li>
+        <li ng-hide="currentPath === ''"><a href="#" class="text-capitalize" ng-click="getData(currentPath, '..')">..</a></li>
+        <li ng-repeat="item in browserItems"><a href="#" class="text-capitalize" ng-click="getData(currentPath, item)">{{item}}</a></li>
     </ul>
 </div>
 

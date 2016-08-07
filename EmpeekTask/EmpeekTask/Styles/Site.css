@@ -8,6 +8,7 @@ a{
     font-size:12pt;
     text-decoration: underline;
     font-weight:bold;
+    color: deepskyblue;
 }
 table, td, th{
     border: 2px solid darkgray;
@@ -17,6 +18,11 @@ table, td, th{
 table thead{
     background-color:  darkgray;
     color:white;
+    border-bottom : none;
+}
+table tbody tr{
+    border-top: none;
+    height: 50px;
 }
 b{
     font-size: 12pt;
