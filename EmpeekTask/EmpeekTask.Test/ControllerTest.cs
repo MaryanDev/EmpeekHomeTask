@@ -75,6 +75,50 @@ namespace EmpeekTask.Test
 
             Assert.AreEqual(result.BrowserItems[2], pageInfo.BrowserItems[2]);
             Assert.AreEqual(4, pageInfo.BrowserItems.Count);
+
+            //Testing behavior of GetObjects method when it has parameters like GetObjects("C"\", "..) and must returns logical drives
+            result = new PageInfo
+            {
+                CurrentPath = String.Empty,
+                BrowserItems = new List<string>
+                {
+                    "C:\\",
+                    "D:\\",
+                    "E:\\",
+                }
+            };
+
+            mock = new Mock<IBrowserHelper>();
+            mock.Setup(m => m.GetLogicalDrives()).Returns(result);
+            controller = new BrowserController(mock.Object);
+            controller.Request = new HttpRequestMessage();
+            controller.Configuration = new HttpConfiguration();
+
+            response = controller.GetObjects("C:\\", "..");
+            Assert.IsTrue(response.TryGetContentValue<PageInfo>(out pageInfo));
+
+            Assert.AreEqual(string.Empty, pageInfo.CurrentPath);
+            Assert.AreEqual(3, pageInfo.BrowserItems.Count);
+            Assert.AreEqual("D:\\", pageInfo.BrowserItems[1]);
+            Assert.AreEqual("E:\\", pageInfo.BrowserItems[2]);
+        }
+
+        [TestMethod]
+        public void CanSortFiles()
+        {
+            Mock<IBrowserHelper> mock = new Mock<IBrowserHelper>();
+            mock.Setup(m => m.GetCountOfFiles("basePath\\path", It.IsAny<Func<long, bool>>())).Returns(150);
+            var controller = new FileSizeController(mock.Object);
+            controller.Request = new HttpRequestMessage();
+            controller.Configuration = new HttpConfiguration();
+
+            var response = controller.SortFiles("basePath", "path");
+
+            FileSizeInfo fzInfo;
+            Assert.IsTrue(response.TryGetContentValue<FileSizeInfo>(out fzInfo));
+            Assert.AreEqual(150, fzInfo.SmallFiles);
+            Assert.AreEqual(150, fzInfo.MediumFiles);
+            Assert.AreEqual(150, fzInfo.LargeFiles);
         }
     }
 }
