@@ -7,7 +7,7 @@
 
     function browserController($scope, browserService) {
 
-        $scope.browserItems = null;
+        $scope.browserItems = localStorage.getItem("browserItems") || null;
         $scope.smallFiles = 0;
         $scope.mediumFiles = 0;
         $scope.largeFiles = 0;
@@ -37,6 +37,8 @@
                     $scope.browserItems = response.data.BrowserItems;
                     $scope.currentPath = response.data.CurrentPath;
                     $scope.itemsErrorMessage = "";
+                    //localStorage.setItem("browserItems", $scope.browserItems);
+                    //localStorage.setItem("currentPath", $scope.currentPath);
                 }, function errorCallback(response) {
                     $scope.itemsErrorMessage = response.data;
                     resetSizeFiles();
@@ -54,6 +56,9 @@
                     $scope.largeFiles = response.data.LargeFiles;
                     $scope.fileSizeErrorMessage = "";
                     $scope.isLoading = false;
+                    //localStorage.setItem("smallFiles", $scope.smallFiles);
+                    //localStorage.setItem("mediumFiles", $scope.mediumFiles);
+                    //localStorage.setItem("largeFiles", $scope.largeFiles);
                 }, function errorCallback(response) {
                     $scope.fileSizeErrorMessage = response.data;
                     resetSizeFiles();

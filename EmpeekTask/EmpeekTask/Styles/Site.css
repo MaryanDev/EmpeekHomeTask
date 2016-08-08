@@ -9,6 +9,7 @@ a{
     text-decoration: underline;
     font-weight:bold;
     color: deepskyblue;
+    cursor: pointer;
 }
 table, td, th{
     border: 2px solid darkgray;
@@ -22,10 +23,14 @@ table thead{
 }
 table tbody tr{
     border-top: none;
-    height: 50px;
+    height: 45px;
+    font-size: 12pt;
 }
 b{
     font-size: 12pt;
+}
+span{
+    color: gray;
 }
 ul, label{
     margin-top:5%;

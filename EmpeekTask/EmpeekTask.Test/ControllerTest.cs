@@ -107,7 +107,7 @@ namespace EmpeekTask.Test
         public void CanSortFiles()
         {
             Mock<IBrowserHelper> mock = new Mock<IBrowserHelper>();
-            mock.Setup(m => m.GetCountOfFiles("basePath\\path", It.IsAny<Func<long, bool>>())).Returns(150);
+            mock.Setup(m => m.GetCountOfFiles("basePath\\path", It.IsAny<Func<int, bool>>())).Returns(150);
             var controller = new FileSizeController(mock.Object);
             controller.Request = new HttpRequestMessage();
             controller.Configuration = new HttpConfiguration();

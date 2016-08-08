@@ -34,13 +34,15 @@ namespace EmpeekTask.Controllers
             try
             {
                 if (basePath != null)
+                {
                     //Checking for return logical drives instead some folders. If basePath is something like C:\ or D:\ and we want to go back then we need to return list of logical drives
-                    if (basePath.EndsWith(@":\") && basePath.Length == 3 && selectedItem == "..")
+                    if (CheckPathToReturnDrives(basePath, selectedItem))
                     {
                         pageInfo = helper.GetLogicalDrives();
 
                         return Request.CreateResponse(HttpStatusCode.OK, pageInfo);
                     }
+                }
                 string path = basePath == null ? selectedItem : Path.Combine(basePath, selectedItem);
 
                 pageInfo = helper.GetItemsForSelectedPath(path);
@@ -62,5 +64,11 @@ namespace EmpeekTask.Controllers
         }
         #endregion
 
+        #region Helpers
+        private bool CheckPathToReturnDrives(string basePath, string selectedItem)
+        {
+            return basePath.EndsWith(@":\") && basePath.Length == 3 && selectedItem == "..";
+        }
+        #endregion
     }
 }

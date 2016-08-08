@@ -17,6 +17,7 @@ namespace EmpeekTask.Helpers.Concrete
 
             foreach (var drive in logicaDrives)
             {
+                //We dont need a CD-Roms drives
                 if (drive.DriveType.ToString() == "Fixed")
                     logicalDrivesNames.Add(drive.Name);
             }
@@ -50,21 +51,29 @@ namespace EmpeekTask.Helpers.Concrete
             return result;
         }
 
-        public int GetCountOfFiles(string path, Func<long, bool> criteria)
+        public int GetCountOfFiles(string path, Func<int, bool> criteria)
         {
+            //Attempt to get files from current directory and subdirectories, 
+            //but if we will have no access to some subfolders we will can't calculate the size
             string[] fileNames = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories);
             int count = 0;
 
             foreach (var fileName in fileNames)
             {
                 FileInfo fileInfo = new FileInfo(fileName);
-                if (criteria(fileInfo.Length / 1024 / 1024))
+                //Converting bytes to megabytes
+                if (criteria(BytesToMb(fileInfo.Length)))
                 {
                     count++;
                 }
             }
 
             return count;
+        }
+
+        private int BytesToMb(long bytes)
+        {
+            return Convert.ToInt32(bytes / 1024 / 1024);
         }
         #endregion
     }

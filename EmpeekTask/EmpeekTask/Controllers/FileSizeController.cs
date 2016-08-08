@@ -26,32 +26,49 @@ namespace EmpeekTask.Controllers
         [HttpGet]
         public HttpResponseMessage SortFiles(string basePath, string selectedItem)
         {
-            try
+            if ((string.IsNullOrEmpty(basePath) && selectedItem.EndsWith(@":\") && selectedItem.Length == 3))
             {
-                string path = basePath == null ? selectedItem : Path.Combine(basePath, selectedItem);
-
-                int smallFiles = helper.GetCountOfFiles(path, size => size <= 10);
-                int mediumFiles = helper.GetCountOfFiles(path, size => size > 10 && size <= 50);
-                int largeFiles = helper.GetCountOfFiles(path, size => size >= 100);
-
-                FileSizeInfo fzInfo = new FileSizeInfo
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "");
+            }
+            else if((basePath.EndsWith(@":\") && basePath.Length == 3 && selectedItem == ".."))
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "");
+            }
+            else
+            {
+                try
                 {
-                    SmallFiles = smallFiles,
-                    MediumFiles = mediumFiles,
-                    LargeFiles = largeFiles
-                };
+                    string path = basePath == null ? selectedItem : Path.Combine(basePath, selectedItem);
 
-                return Request.CreateResponse(HttpStatusCode.OK, fzInfo);
-            }
-            catch(UnauthorizedAccessException)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Can't calculate size of some files, probably you have no access to some directories or files. ");
-            }
-            catch(IOException)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Can't calculate size of some files, probably you have no access to some directories or files. ");
+                    string fullpath = Path.GetFullPath(path);
+                    if(fullpath.Length == 3 && fullpath.EndsWith(@":\"))
+                    {
+                        return Request.CreateResponse(HttpStatusCode.InternalServerError, "");
+                    }
+                    int smallFiles = helper.GetCountOfFiles(path, size => size <= 10);
+                    int mediumFiles = helper.GetCountOfFiles(path, size => size > 10 && size <= 50);
+                    int largeFiles = helper.GetCountOfFiles(path, size => size >= 100);
+
+                    FileSizeInfo fzInfo = new FileSizeInfo
+                    {
+                        SmallFiles = smallFiles,
+                        MediumFiles = mediumFiles,
+                        LargeFiles = largeFiles
+                    };
+
+                    return Request.CreateResponse(HttpStatusCode.OK, fzInfo);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError, "Can't calculate size of some files, probably you have no access to some directories or files. ");
+                }
+                catch (IOException)
+                {
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError, "Can't calculate size of some files, probably you have no access to some directories or files. ");
+                }
             }
         }
-        #endregion
     }
+    #endregion
 }
+

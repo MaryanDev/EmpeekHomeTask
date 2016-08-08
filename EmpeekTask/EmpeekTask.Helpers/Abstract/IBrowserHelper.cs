@@ -8,7 +8,7 @@ namespace EmpeekTask.Helpers.Abstract
         #region Methods
         PageInfo GetLogicalDrives();
         PageInfo GetItemsForSelectedPath(string path);
-        int GetCountOfFiles(string path, Func<long, bool> criteria);
+        int GetCountOfFiles(string path, Func<int, bool> criteria);
         #endregion
     }
 }
