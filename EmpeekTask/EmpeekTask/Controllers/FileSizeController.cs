@@ -67,10 +67,6 @@ namespace EmpeekTask.Controllers
             {
                 return true;
             }
-            //else if((basePath.EndsWith(@":\") && basePath.Length == 3 && selectedItem == ".."))
-            //{
-            //    return true;
-            //}
             else if(fullpath.Length == 3 && fullpath.EndsWith(@":\"))
             {
                 return true;
