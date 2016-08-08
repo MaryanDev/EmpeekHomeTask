@@ -25,8 +25,6 @@
                     $scope.browserItems = response.data.BrowserItems;
                     $scope.currentPath = response.data.CurrentPath;
                 });
-            
-
         };
 
         $scope.getData = function (basePath, selectedItem) {
@@ -73,7 +71,7 @@
             $scope.smallFiles = 0;
             $scope.mediumFiles = 0;
             $scope.largeFiles = 0;
-            localStorage.setItem("")
+            //localStorage.setItem("")
         };
     };
 })(angular);

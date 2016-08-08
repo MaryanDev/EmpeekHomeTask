@@ -65,7 +65,7 @@ namespace EmpeekTask.Controllers
         #endregion
 
         #region Helpers
-        private bool CheckPathToReturnDrives(string basePath, string selectedItem)
+        private  bool CheckPathToReturnDrives(string basePath, string selectedItem)
         {
             return basePath.EndsWith(@":\") && basePath.Length == 3 && selectedItem == "..";
         }

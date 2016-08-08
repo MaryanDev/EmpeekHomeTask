@@ -27,25 +27,16 @@ namespace EmpeekTask.Controllers
         public HttpResponseMessage SortFiles(string basePath, string selectedItem)
         {
             //Do not calculate size of files is we trying to acces whole drive becouse it can get very much time
-            if ((string.IsNullOrEmpty(basePath) && selectedItem.EndsWith(@":\") && selectedItem.Length == 3))
+            if (CheckPathToReturnDrives(basePath, selectedItem))
             {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "");
-            }
-            else if((basePath.EndsWith(@":\") && basePath.Length == 3 && selectedItem == ".."))
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "");
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, String.Empty);
             }
             else
             {
                 try
                 {
                     string path = basePath == null ? selectedItem : Path.Combine(basePath, selectedItem);
-                    //Do not calculate size of files is we trying to acces whole drive becouse it can get very much time
-                    string fullpath = Path.GetFullPath(path);
-                    if(fullpath.Length == 3 && fullpath.EndsWith(@":\"))
-                    {
-                        return Request.CreateResponse(HttpStatusCode.InternalServerError, "");
-                    }
+
                     int smallFiles = helper.GetCountOfFiles(path, size => size <= 10);
                     int mediumFiles = helper.GetCountOfFiles(path, size => size > 10 && size <= 50);
                     int largeFiles = helper.GetCountOfFiles(path, size => size >= 100);
@@ -56,7 +47,6 @@ namespace EmpeekTask.Controllers
                         MediumFiles = mediumFiles,
                         LargeFiles = largeFiles
                     };
-
                     return Request.CreateResponse(HttpStatusCode.OK, fzInfo);
                 }
                 catch (Exception)
@@ -65,7 +55,33 @@ namespace EmpeekTask.Controllers
                 }
             }
         }
+        #endregion
+
+        #region Helpers
+        private  bool CheckPathToReturnDrives(string basePath, string selectedItem)
+        {
+            string path = basePath == null ? selectedItem : Path.Combine(basePath, selectedItem);
+            //Do not calculate size of files is we trying to acces whole drive becouse it can get very much time
+            string fullpath = Path.GetFullPath(path);
+            if (string.IsNullOrEmpty(basePath) && selectedItem.EndsWith(@":\") && selectedItem.Length == 3)
+            {
+                return true;
+            }
+            //else if((basePath.EndsWith(@":\") && basePath.Length == 3 && selectedItem == ".."))
+            //{
+            //    return true;
+            //}
+            else if(fullpath.Length == 3 && fullpath.EndsWith(@":\"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        #endregion
     }
-    #endregion
+    
 }
 

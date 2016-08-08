@@ -107,18 +107,27 @@ namespace EmpeekTask.Test
         public void CanSortFiles()
         {
             Mock<IBrowserHelper> mock = new Mock<IBrowserHelper>();
-            mock.Setup(m => m.GetCountOfFiles("basePath\\path", It.IsAny<Func<int, bool>>())).Returns(150);
+            mock.Setup(m => m.GetCountOfFiles("D:\\path", It.IsAny<Func<int, bool>>())).Returns(150);
             var controller = new FileSizeController(mock.Object);
             controller.Request = new HttpRequestMessage();
             controller.Configuration = new HttpConfiguration();
 
-            var response = controller.SortFiles("basePath", "path");
+            var response = controller.SortFiles("D:\\", "path");
 
             FileSizeInfo fzInfo;
             Assert.IsTrue(response.TryGetContentValue<FileSizeInfo>(out fzInfo));
             Assert.AreEqual(150, fzInfo.SmallFiles);
             Assert.AreEqual(150, fzInfo.MediumFiles);
             Assert.AreEqual(150, fzInfo.LargeFiles);
+
+            string result;
+            response = controller.SortFiles("D:\\Path", "..");
+            Assert.IsTrue(response.TryGetContentValue<String>(out result));
+            Assert.AreEqual(string.Empty, result);
+
+            response = controller.SortFiles(null, "D:\\");
+            Assert.IsTrue(response.TryGetContentValue<String>(out result));
+            Assert.AreEqual(string.Empty, result);
         }
         #endregion
     }
