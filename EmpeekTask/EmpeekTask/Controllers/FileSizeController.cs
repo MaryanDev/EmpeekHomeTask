@@ -26,6 +26,7 @@ namespace EmpeekTask.Controllers
         [HttpGet]
         public HttpResponseMessage SortFiles(string basePath, string selectedItem)
         {
+            //Do not calculate size of files is we trying to acces whole drive becouse it can get very much time
             if ((string.IsNullOrEmpty(basePath) && selectedItem.EndsWith(@":\") && selectedItem.Length == 3))
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, "");
@@ -39,7 +40,7 @@ namespace EmpeekTask.Controllers
                 try
                 {
                     string path = basePath == null ? selectedItem : Path.Combine(basePath, selectedItem);
-
+                    //Do not calculate size of files is we trying to acces whole drive becouse it can get very much time
                     string fullpath = Path.GetFullPath(path);
                     if(fullpath.Length == 3 && fullpath.EndsWith(@":\"))
                     {
@@ -58,11 +59,7 @@ namespace EmpeekTask.Controllers
 
                     return Request.CreateResponse(HttpStatusCode.OK, fzInfo);
                 }
-                catch (UnauthorizedAccessException)
-                {
-                    return Request.CreateResponse(HttpStatusCode.InternalServerError, "Can't calculate size of some files, probably you have no access to some directories or files. ");
-                }
-                catch (IOException)
+                catch (Exception)
                 {
                     return Request.CreateResponse(HttpStatusCode.InternalServerError, "Can't calculate size of some files, probably you have no access to some directories or files. ");
                 }

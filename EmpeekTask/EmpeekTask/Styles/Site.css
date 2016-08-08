@@ -29,7 +29,7 @@ table tbody tr{
 b{
     font-size: 12pt;
 }
-span{
+#path{
     color: gray;
 }
 ul, label{

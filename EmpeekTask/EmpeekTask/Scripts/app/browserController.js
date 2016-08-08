@@ -7,7 +7,7 @@
 
     function browserController($scope, browserService) {
 
-        $scope.browserItems = localStorage.getItem("browserItems") || null;
+        $scope.browserItems = null;
         $scope.smallFiles = 0;
         $scope.mediumFiles = 0;
         $scope.largeFiles = 0;
@@ -19,14 +19,17 @@
         activate();
 
         function activate() {
+
             browserService.getDrives()
                 .then(function (response) {
                     $scope.browserItems = response.data.BrowserItems;
                     $scope.currentPath = response.data.CurrentPath;
                 });
+            
+
         };
 
-        $scope.getData = function(basePath, selectedItem){
+        $scope.getData = function (basePath, selectedItem) {
             getObjects(basePath, selectedItem);
             sortFilesBySize(basePath, selectedItem);
         };
@@ -70,6 +73,7 @@
             $scope.smallFiles = 0;
             $scope.mediumFiles = 0;
             $scope.largeFiles = 0;
+            localStorage.setItem("")
         };
     };
 })(angular);
