@@ -1,3 +1,3 @@
 ﻿(function (angular) {
-    var browserModule = angular.module("browserModule", []);
+    var browserModule = angular.module("browserModule", ["ui.bootstrap"]);
 })(angular);

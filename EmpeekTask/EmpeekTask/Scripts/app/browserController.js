@@ -1,11 +1,13 @@
-﻿(function (angular) {
+﻿/// <reference path="alertModal.html" />
+/// <reference path="alertModal.html" />
+(function (angular) {
     angular
         .module("browserModule")
         .controller("browserController", browserController);
 
-    browserController.$inject = ["$scope", "browserService"];
+    browserController.$inject = ["$scope", "browserService", "$uibModal"];
 
-    function browserController($scope, browserService) {
+    function browserController($scope, browserService, $uibModal) {
 
         $scope.browserItems = null;
         $scope.smallFiles = 0;
@@ -29,7 +31,7 @@
 
         $scope.getData = function (basePath, selectedItem) {
             if ($scope.isLoading) {
-                alert("Please wait the response from the server with information about size of files!");
+                openModal("Please wait the response from the server with information about size of files!");
             }
             else {
                 getObjects(basePath, selectedItem);
@@ -77,6 +79,20 @@
             $scope.mediumFiles = 0;
             $scope.largeFiles = 0;
             //localStorage.setItem("")
+        };
+
+        function openModal(message) {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: "/Scripts/app/alertModal.html",
+                controller: "alertModalController",
+                size: "sm",
+                resolve: {
+                    message: function () {
+                        return message;
+                    }
+                }
+            });
         };
     };
 })(angular);

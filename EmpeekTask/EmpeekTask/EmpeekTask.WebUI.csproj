@@ -123,10 +123,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Scripts\app\alertModal.html" />
+    <Content Include="Scripts\app\alertModalController.js" />
     <Content Include="Scripts\app\browserController.js" />
     <Content Include="Scripts\app\browserModule.js" />
     <Content Include="Scripts\app\browserService.js" />
     <Content Include="Scripts\libs\angular.min.js" />
+    <Content Include="Scripts\libs\ui-bootstrap-tpls-2.0.1.min.js" />
     <Content Include="Styles\bootstrap.min.css" />
     <Content Include="Styles\Site.css" />
     <Content Include="Web.config" />
