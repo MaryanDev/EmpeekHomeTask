@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using EmpeekTask.Helpers.Abstract;
-using EmpeekTask.Helpers.Concrete;
 using EmpeekTask.Helpers.Entities;
 using EmpeekTask.Controllers;
 using System.Collections.Generic;
@@ -14,6 +13,7 @@ namespace EmpeekTask.Test
     [TestClass]
     public class ControllerTest
     {
+        #region Test Methods
         [TestMethod]
         public void CanGetLogicalDrives()
         {
@@ -120,5 +120,6 @@ namespace EmpeekTask.Test
             Assert.AreEqual(150, fzInfo.MediumFiles);
             Assert.AreEqual(150, fzInfo.LargeFiles);
         }
+        #endregion
     }
 }

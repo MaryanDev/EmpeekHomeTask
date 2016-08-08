@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EmpeekTask.Helpers.Abstract;
 using EmpeekTask.Helpers.Entities;
 using System.IO;
@@ -11,6 +8,7 @@ namespace EmpeekTask.Helpers.Concrete
 {
     public class BrowserHelper : IBrowserHelper
     {
+        #region Public Methods
         public PageInfo GetLogicalDrives()
         {
             PageInfo result;
@@ -68,5 +66,6 @@ namespace EmpeekTask.Helpers.Concrete
 
             return count;
         }
+        #endregion
     }
 }

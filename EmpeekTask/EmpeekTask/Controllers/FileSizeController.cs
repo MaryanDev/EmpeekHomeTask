@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using EmpeekTask.Helpers.Abstract;
-using EmpeekTask.Helpers.Concrete;
 using EmpeekTask.Helpers.Entities;
 using System.Web.Http;
 
@@ -14,11 +11,18 @@ namespace EmpeekTask.Controllers
 {
     public class FileSizeController : ApiController
     {
+        #region Private Fields
         private IBrowserHelper helper;
+        #endregion
+
+        #region Constructors
         public FileSizeController(IBrowserHelper helperParam)
         {
             helper = helperParam;
         }
+        #endregion
+
+        #region Web Api Methods
         [HttpGet]
         public HttpResponseMessage SortFiles(string basePath, string selectedItem)
         {
@@ -48,5 +52,6 @@ namespace EmpeekTask.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, "Can't calculate size of some files, probably you have no access to some directories or files. ");
             }
         }
+        #endregion
     }
 }

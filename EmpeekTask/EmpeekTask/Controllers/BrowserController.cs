@@ -1,24 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.IO;
 using EmpeekTask.Helpers.Abstract;
-using EmpeekTask.Helpers.Concrete;
 using EmpeekTask.Helpers.Entities;
 
 namespace EmpeekTask.Controllers
 {
     public class BrowserController : ApiController
     {
+        #region Private fields
         private IBrowserHelper helper;
+        #endregion
 
+        #region Constructors
         public BrowserController(IBrowserHelper helperParam)
         {
             helper = helperParam;
         }
+        #endregion
+
+        #region Web Api Methods
         public HttpResponseMessage GetDrives()
         {
             PageInfo pageInfo = helper.GetLogicalDrives();
@@ -57,6 +60,7 @@ namespace EmpeekTask.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, "Invalid Path. ");
             }
         }
+        #endregion
 
     }
 }
