@@ -50,7 +50,7 @@
         <b>Current Path: </b><span id="path">{{currentPath}}</span>
     </label>
     <div class="panel">
-        <ul class="list-unstyled" ng-cloak ng-hide="isLoading">
+        <ul class="list-unstyled" ng-cloak @*ng-hide="isLoading"*@>
             <li ng-hide="currentPath === ''"><a class="text-capitalize" ng-click="getData(currentPath, '..')">..</a></li>
             <li ng-repeat="item in browserItems"><a class="text-capitalize" ng-click="getData(currentPath, item)">{{item}}</a></li>
         </ul>

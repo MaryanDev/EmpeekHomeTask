@@ -19,17 +19,22 @@
         activate();
 
         function activate() {
-
             browserService.getDrives()
                 .then(function (response) {
                     $scope.browserItems = response.data.BrowserItems;
                     $scope.currentPath = response.data.CurrentPath;
                 });
+
         };
 
         $scope.getData = function (basePath, selectedItem) {
-            getObjects(basePath, selectedItem);
-            sortFilesBySize(basePath, selectedItem);
+            if ($scope.isLoading) {
+                alert("Please wait the response from the server with information about size of files!");
+            }
+            else {
+                getObjects(basePath, selectedItem);
+                sortFilesBySize(basePath, selectedItem);
+            }
         };
 
         function getObjects(basePath, selectedItem) {
