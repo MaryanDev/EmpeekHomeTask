@@ -27,7 +27,7 @@ namespace EmpeekTask.Controllers
         public HttpResponseMessage SortFiles(string basePath, string selectedItem)
         {
             //Do not calculate size of files is we trying to acces whole drive becouse it can get very much time
-            if (CheckPathToReturnDrives(basePath, selectedItem))
+            if (CheckPathToCalculateSize(basePath, selectedItem))
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, String.Empty);
             }
@@ -58,7 +58,7 @@ namespace EmpeekTask.Controllers
         #endregion
 
         #region Helpers
-        private  bool CheckPathToReturnDrives(string basePath, string selectedItem)
+        private  bool CheckPathToCalculateSize(string basePath, string selectedItem)
         {
             string path = basePath == null ? selectedItem : Path.Combine(basePath, selectedItem);
             //Do not calculate size of files is we trying to acces whole drive becouse it can get very much time
