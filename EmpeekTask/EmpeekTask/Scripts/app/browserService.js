@@ -9,7 +9,7 @@
 
         var service = {
             getDrives: getDrivesAjax,
-            getObjects: getObjectsAjax,
+            getDirectoryItems: getDirectoryItemsAjax,
             sortFilesBySize: sortFilesBySizeAjax
         };
 
@@ -24,7 +24,7 @@
             return promise;
         };
 
-        function getObjectsAjax(basePath, selectedItem) {
+        function getDirectoryItemsAjax(basePath, selectedItem) {
             var promise = $http({
                 method: "GET",
                 url: "/api/browser",

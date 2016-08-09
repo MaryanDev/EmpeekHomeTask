@@ -70,7 +70,9 @@ namespace EmpeekTask.Helpers.Concrete
 
             return count;
         }
+        #endregion
 
+        #region Helpers
         private int BytesToMb(long bytes)
         {
             return Convert.ToInt32(bytes / 1024 / 1024);

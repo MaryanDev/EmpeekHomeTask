@@ -34,19 +34,17 @@
                 openModal("Please wait the response from the server with information about size of files!");
             }
             else {
-                getObjects(basePath, selectedItem);
+                getDirectoryItems(basePath, selectedItem);
                 sortFilesBySize(basePath, selectedItem);
             }
         };
 
-        function getObjects(basePath, selectedItem) {
-            browserService.getObjects(basePath, selectedItem)
+        function getDirectoryItems(basePath, selectedItem) {
+            browserService.getDirectoryItems(basePath, selectedItem)
                 .then(function (response) {
                     $scope.browserItems = response.data.BrowserItems;
                     $scope.currentPath = response.data.CurrentPath;
                     $scope.itemsErrorMessage = "";
-                    //localStorage.setItem("browserItems", $scope.browserItems);
-                    //localStorage.setItem("currentPath", $scope.currentPath);
                 }, function errorCallback(response) {
                     $scope.itemsErrorMessage = response.data;
                     resetSizeFiles();
@@ -64,9 +62,7 @@
                     $scope.largeFiles = response.data.LargeFiles;
                     $scope.fileSizeErrorMessage = "";
                     $scope.isLoading = false;
-                    //localStorage.setItem("smallFiles", $scope.smallFiles);
-                    //localStorage.setItem("mediumFiles", $scope.mediumFiles);
-                    //localStorage.setItem("largeFiles", $scope.largeFiles);
+
                 }, function errorCallback(response) {
                     $scope.fileSizeErrorMessage = response.data;
                     resetSizeFiles();
@@ -78,7 +74,6 @@
             $scope.smallFiles = 0;
             $scope.mediumFiles = 0;
             $scope.largeFiles = 0;
-            //localStorage.setItem("")
         };
 
         function openModal(message) {

@@ -38,7 +38,7 @@ namespace EmpeekTask.Test
 
             PageInfo pageInfo;
             Assert.IsTrue(response.TryGetContentValue<PageInfo>(out pageInfo));
-            Assert.AreEqual("", pageInfo.CurrentPath);
+            Assert.AreEqual(string.Empty, pageInfo.CurrentPath);
             Assert.AreEqual(4, pageInfo.BrowserItems.Count);
             Assert.AreEqual("C:\\", pageInfo.BrowserItems[0]);
             Assert.AreEqual("D:\\", pageInfo.BrowserItems[1]);
@@ -66,7 +66,7 @@ namespace EmpeekTask.Test
             controller.Request = new HttpRequestMessage();
             controller.Configuration = new HttpConfiguration();
 
-            var response = controller.GetObjects("basePath", "path");
+            var response = controller.GetDirectoryItems("basePath", "path");
 
 
 
@@ -76,7 +76,7 @@ namespace EmpeekTask.Test
             Assert.AreEqual(result.BrowserItems[2], pageInfo.BrowserItems[2]);
             Assert.AreEqual(4, pageInfo.BrowserItems.Count);
 
-            //Testing behavior of GetObjects method when it has parameters like GetObjects("C"\", "..) and must returns logical drives
+            //Testing behavior of GetObjects method when it has parameters like GetObjects("C"\", "..") and must returns logical drives
             result = new PageInfo
             {
                 CurrentPath = String.Empty,
@@ -94,7 +94,7 @@ namespace EmpeekTask.Test
             controller.Request = new HttpRequestMessage();
             controller.Configuration = new HttpConfiguration();
 
-            response = controller.GetObjects("C:\\", "..");
+            response = controller.GetDirectoryItems("C:\\", "..");
             Assert.IsTrue(response.TryGetContentValue<PageInfo>(out pageInfo));
 
             Assert.AreEqual(string.Empty, pageInfo.CurrentPath);
